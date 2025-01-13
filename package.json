@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "nearly": "^1.8.1",
+    "nearley": "^2.20.1",
     "sever-tokens": "^0.1.5"
   },
   "workspaces": [
@@ -14,7 +14,9 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "jest test"
+    "test": "jest test",
+    "prepare": "npm run nearly",
+    "nearly": "npx nearleyc --out lib/grammar.js lib/grammar.ne"
   },
   "repository": {
     "type": "git",
