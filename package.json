@@ -10,13 +10,15 @@
   "version": "1.0.0",
   "description": "A library for parsing binaries",
   "main": "index.js",
+  "bin": {
+    "jugheadc": "bin/jugheadc"
+  },
   "directories": {
     "lib": "lib"
   },
   "scripts": {
     "test": "jest test",
-    "prepare": "npm run nearly",
-    "nearly": "npx nearleyc --out lib/grammar.js lib/grammar.ne"
+    "prepare": "npx nearleyc --out lib/grammar.js lib/grammar.ne"
   },
   "repository": {
     "type": "git",
@@ -34,6 +36,7 @@
   },
   "homepage": "https://github.com/asterick/jughead#readme",
   "devDependencies": {
+    "argparse": "^2.0.1",
     "jest": "^29.7.0"
   }
 }
