@@ -1,10 +1,10 @@
 {
   "dependencies": {
     "nearly": "^1.8.1",
-    "sever": "^0.0.2"
+    "sever-tokens": "^0.1.5"
   },
   "workspaces": [
-    "../sever"
+    "../sever-tokens"
   ],
   "name": "jughead",
   "version": "1.0.0",
@@ -26,9 +26,12 @@
     "parsing"
   ],
   "author": "Bryon Vandiver",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/asterick/jughead/issues"
   },
-  "homepage": "https://github.com/asterick/jughead#readme"
+  "homepage": "https://github.com/asterick/jughead#readme",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
 }
