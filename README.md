@@ -5,40 +5,36 @@ A library for parsing binaries
 ```
 require "path"
 
-define int32 integer(4) unsigned
-define varint leb128 signed
-define byte integer(1)
-define string byte[int32] utf8;
+define int32: integer(4) unsigned
+define varint: leb128 signed
+define byte: integer(1)
+define string: byte[int32] utf8
 
-define blerb enum {
-    0: { int32: x, int32: y }
-    1: { int32: z },
-   -1: terminal
+define RandomSet: enum {
+    0: { x: int32, y: int32 }
+    1: { z: int32 },
+   -1: nil
 }
 
 define Bitmap {
-    internal varint: width, height, size = width * height
-    int32[width, height]: pixels
+    internal width: varint
+    internal height: varint
+    pixels: int32[width, height]
 }
 
 public define GameMaker structure {
-    internal int32: magic_number = 0xCAFEBABE
+    internal magic_number: int32 = 0xCAFEBABE
 
-    ref blerb: Bleep
+    blerp: ref RandomSet[until nil]
+    set: RandomSet <varint> [*]
 
-    blerb (varint) [*] :someType
-
-    block[int32] zlib {
+    section(int32) zlib {
         Bitmap [*]
     }
 
-    internal int32 :t
-    internal blerb :Bloop
-
+    internal t: int32
     assert (t in (0...31))
-}
 
-define GameMakerMain8 structure {
-    // This is a simple append
+    internal blerb: Bloop
 }
 ```
