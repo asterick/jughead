@@ -11,8 +11,8 @@ define byte integer(1)
 define string byte[int32] utf8;
 
 define blerb enum {
-    0: TypeA (1) { x: int32, b: int32 }
-    1: TypeB (2),
+    0: { int32: x, int32: y }
+    1: { int32: z },
    -1: terminal
 }
 
