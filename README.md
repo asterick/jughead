@@ -5,36 +5,45 @@ A library for parsing binaries
 ```
 require "path"
 
+const CURRENT_REV = 31
+
 define int32: integer(4) unsigned
 define varint: leb128 signed
 define byte: integer(1)
 define string: byte[int32] utf8
 
-define RandomSet: enum {
+define RandomSet: enum <varint> {
     0: { x: int32, y: int32 }
     1: { z: int32 },
    -1: nil
 }
 
-define Bitmap {
+public define Bitmap: {
     internal width: varint
     internal height: varint
     pixels: int32[width, height]
 }
 
-public define GameMaker structure {
-    internal magic_number: int32 = 0xCAFEBABE
+public define GameMaker: structure {
+    # File format watermark
+    internal: int32 == 0xCAFEBABE
 
-    blerp: ref RandomSet[until nil]
-    set: RandomSet <varint> [*]
+    internal encoding_version: int32 default(CURRENT_REV)
+    assert (encoding_version <= CURRENT_REV, "Version unhandled: {encoding_version}")
 
-    section(int32) zlib {
-        Bitmap [*]
+    internal set: RandomSet[until nil]
+    set_refs: varint[until -1] ref<index(set)>
+    floating_ref: varint[until -1] ref<RandomSet> 
+
+    section[int32] zlib {
+        bitmaps: Bitmap [*]
     }
-
-    internal t: int32
-    assert (t in (0...31))
 
     internal blerb: Bloop
 }
 ```
+
+Future features
+===
+ * Key/Value sets
+ * Reverse order encoded sets
