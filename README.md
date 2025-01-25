@@ -24,16 +24,16 @@ public define Bitmap: {
     pixels: int32[width, height]
 }
 
-public define GameMaker: structure {
+public define GameFile: structure {
     # File format watermark
     internal: int32 == 0xCAFEBABE
 
     internal encoding_version: int32 default(CURRENT_REV)
     assert (encoding_version <= CURRENT_REV, "Version unhandled: {encoding_version}")
 
-    internal set: RandomSet[until nil]
-    set_refs: varint[until -1] ref<index(set)>
-    floating_ref: varint[until -1] ref<RandomSet> 
+    internal set: RandomSet [until nil]             # Keep decoding until a null variant is discovered
+    set_refs: (varint != -1) ref<index(set)> [*]    # Keep decoding, varint == -1 (reverse termination this sound complicated)
+    floating_ref: varint ref<RandomSet>[until nil]  # Keep decoding until refering to a nil
 
     section[int32] zlib {
         bitmaps: Bitmap [*]
