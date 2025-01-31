@@ -42,9 +42,8 @@ parameter ->
 expression_list ->
     expression ("," expression):*
 
-#
 # Arithmatic
-#
+# ==========
 
 expression ->
     or_expression
@@ -104,5 +103,6 @@ unary_expression ->
 top_expression ->
       %identifier
     | %number
+    | %string
     | "nil"
     | "(" expression ")"
