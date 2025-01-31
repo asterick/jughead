@@ -11,8 +11,7 @@ main -> statement:* {% id %}
 
 statement -> 
       "require" %string
-    | access:? "def":? %identifier ":" type:*
-    | const
+    | field
 
 access ->
     "public" | "internal"
@@ -20,14 +19,16 @@ access ->
 type ->
       %identifier ("(" parameter_list ")"):?
     | "[" size "]"
-    | "struct":? "{" field:* "}"
+    | "struct":? "{" entity:* "}"
 
-field ->
-      access:? "def":? %identifier ":" type:*
-    | "section" "[" expression "]" "{" field:* "}"
-    | "parameter" %identifier "=" expression
-    | const
+entity ->
+      "section" "[" expression "]" "{" entity:* "}"
     | assert
+
+field->
+      "parameter" %identifier "=" expression
+    | const
+    | access:? "def":? %identifier ":" type:*
 
 const ->
     access:? "const" %identifier "=" expression
