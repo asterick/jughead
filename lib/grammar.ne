@@ -3,15 +3,19 @@ const lexer = require("./lexer.js");
 %}
 @lexer lexer
 
+#
+# TODO: ref, enum
+#
+
 main -> statement:* {% id %}
 
 statement -> 
       "require" %string
-    | ("public" | "private"):? "define" %identifier ":" type:*
+    | access:? "def":? %identifier ":" type:*
     | const
 
 access ->
-    "public" | "private"
+    "public" | "internal"
 
 type ->
       %identifier ("(" parameter_list ")"):?
@@ -19,10 +23,11 @@ type ->
     | "struct":? "{" field:* "}"
 
 field ->
-      %identifier ":" type:*
+      access:? "def":? %identifier ":" type:*
     | "section" "[" expression "]" "{" field:* "}"
     | "parameter" %identifier "=" expression
     | const
+    | assert
 
 const ->
     access:? "const" %identifier "=" expression
@@ -54,6 +59,10 @@ or_expression ->
 
 and_expression ->
       and_expression "and" bit_expression
+    | bit_expression
+
+type_expression ->
+      type_expression "is" bit_expression
     | bit_expression
 
 bit_expression ->
