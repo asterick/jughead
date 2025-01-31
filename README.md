@@ -10,6 +10,7 @@ const CURRENT_REV = 31
 define int32: integer (unsigned, bits=32, big)
 define varint: leb128 (signed)
 define byte: integer (bits=8)
+define f32: float(bits=32)
 define string: byte[int32] utf8
 
 define RandomSet: enum <varint> {
